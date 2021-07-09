@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dp-world-ebitda",
+            "outputPath": "docs/dp-world-ebitda",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "dp-world-ebitda"
+    }
+  },
+  "defaultProject": "dp-world-ebitda",
+  "cli": {
+    "analytics": false
+  }
 }

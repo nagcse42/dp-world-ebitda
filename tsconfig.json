@@ -6,12 +6,18 @@
 */
 {
   "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-]
+    "references": [
+      {
+        "path": "./tsconfig.app.json"
+      },
+      {
+        "path": "./tsconfig.spec.json"
+      }
+  ],
+  "exclude": [
+    "node_modules",
+  ],
+  "compilerOptions": {
+      "skipLibCheck": true
+  }
 }
