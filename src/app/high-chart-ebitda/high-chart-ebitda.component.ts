@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { editdaData } from './editda_data';
+import { testSeriesData } from './editda_data';
 
 
 declare var require: any;
@@ -136,7 +137,7 @@ export class HighChartEbitdaComponent implements OnInit {
           }
         },
         title: {
-          text: 'Budget',
+          text: 'Vs Budget',
           style: {
             color: 'black'
           }
@@ -144,7 +145,7 @@ export class HighChartEbitdaComponent implements OnInit {
       },
       { // Secondary yAxis
         title: {
-          text: 'Actual',
+          text: '',
           style: {
             color: Highcharts.getOptions().colors[3]
           }
@@ -154,7 +155,8 @@ export class HighChartEbitdaComponent implements OnInit {
             color: 'black'
           }
         },
-        opposite: true
+        opposite: true,
+        //min: 6000000
       }],
     tooltip: {
       formatter: function () {
@@ -248,125 +250,130 @@ export class HighChartEbitdaComponent implements OnInit {
     this.toPeriods = this.MONTHS;
 
     if (editdaData && editdaData.length > 0) {
-      this.processData();
+      this.processData(false);
     }
   }
 
-  processData() {
-    let seriesData: any = [
-      // Yearly Data
-      {
-        type: 'column',
-        name: '2020 Actual',
-        data: [],
-        color: '#212954'
-      },
-      {
-        type: 'column',
-        name: '2019 Actual',
-        data: [],
-        color: '#8592d4'
-      },
-      {
-        type: 'column',
-        name: '2020 Budget',
-        data: [],
-        color: 'pink'
-      },
-      // Line Chart
-      {
-        type: 'spline',
-        name: 'YTD 2020',
-        yAxis: 1,
-        xAxis: 1,
-        data: [],
-        color: '#212954',
-        marker: {
-          lineWidth: 1,
-          lineColor: '#212954',
-          fillColor: '#212954'
+  processData(isTestData: boolean) {
+    let seriesData: any;
+    if (isTestData) {
+      seriesData = testSeriesData;
+    } else {
+      seriesData = [
+        // Yearly Data
+        {
+          type: 'column',
+          name: '2020 Actual',
+          data: [],
+          color: '#212954'
+        },
+        {
+          type: 'column',
+          name: '2019 Actual',
+          data: [],
+          color: '#8592d4'
+        },
+        {
+          type: 'column',
+          name: '2020 Budget',
+          data: [],
+          color: 'pink'
+        },
+        // Line Chart
+        {
+          type: 'spline',
+          name: 'YTD 2020',
+          yAxis: 1,
+          xAxis: 1,
+          data: [],
+          color: '#212954',
+          marker: {
+            lineWidth: 1,
+            lineColor: '#212954',
+            fillColor: '#212954'
+          }
+        },
+        {
+          type: 'spline',
+          name: 'YTD 2019',
+          yAxis: 1,
+          xAxis: 1,
+          data: [],
+          color: '#8592d4',
+          marker: {
+            lineWidth: 1,
+            lineColor: '#8592d4',
+            fillColor: '#8592d4'
+          }
+        },
+        {
+          type: 'spline',
+          name: 'YTD Budget',
+          yAxis: 1,
+          xAxis: 1,
+          data: [],
+          color: 'pink',
+          marker: {
+            lineWidth: 1,
+            lineColor: 'pink',
+            fillColor: 'pink'
+          }
         }
-      },
-      {
-        type: 'spline',
-        name: 'YTD 2019',
-        yAxis: 1,
-        xAxis: 1,
-        data: [],
-        color: '#8592d4',
-        marker: {
-          lineWidth: 1,
-          lineColor: '#8592d4',
-          fillColor: '#8592d4'
-        }
-      },
-      {
-        type: 'spline',
-        name: 'YTD Budget',
-        yAxis: 1,
-        xAxis: 1,
-        data: [],
-        color: 'pink',
-        marker: {
-          lineWidth: 1,
-          lineColor: 'pink',
-          fillColor: 'pink'
-        }
-      }
-    ];
+      ];
 
-    for (let data of editdaData) {
-      for (let index = 0; index < seriesData.length; index++) {
-        let seriesDataItem = seriesData[index];
-        let monthIndex = this.MONTHS.indexOf(data.MONTH);
-        this.years.indexOf(data.YEAR) === -1 ? this.years.push(data.YEAR) : '';
+      for (let data of editdaData) {
+        for (let index = 0; index < seriesData.length; index++) {
+          let seriesDataItem = seriesData[index];
+          let monthIndex = this.MONTHS.indexOf(data.MONTH);
+          this.years.indexOf(data.YEAR) === -1 ? this.years.push(data.YEAR) : '';
 
-        switch (seriesDataItem.name) {
-          case 'YTD Budget':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.YTDbudget;
-            } else {
-              seriesDataItem.data.push(data.YTDbudget);
-            }
-            break;
-          case 'YTD 2019':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.py_ytd_actual;
-            } else {
-              seriesDataItem.data.push(data.py_ytd_actual);
-            }
-            break;
-          case 'YTD 2020':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.YTDactual;
-            } else {
-              seriesDataItem.data.push(data.YTDactual);
-            }
-            break;
-          case '2020 Budget':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.MTDbudget;
-            } else {
-              seriesDataItem.data.push(data.MTDbudget);
-            }
-            break;
-          case '2020 Actual':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.MTDactual;
-            } else {
-              seriesDataItem.data.push(data.MTDactual);
-            }
-            break;
-          case '2019 Actual':
-            if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
-              seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.py_mtd_actual;
-            } else {
-              seriesDataItem.data.push(data.py_mtd_actual);
-            }
-            break;
-          default: break;
+          switch (seriesDataItem.name) {
+            case 'YTD Budget':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.YTDbudget;
+              } else {
+                seriesDataItem.data.push(data.YTDbudget);
+              }
+              break;
+            case 'YTD 2019':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.py_ytd_actual;
+              } else {
+                seriesDataItem.data.push(data.py_ytd_actual);
+              }
+              break;
+            case 'YTD 2020':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.YTDactual;
+              } else {
+                seriesDataItem.data.push(data.YTDactual);
+              }
+              break;
+            case '2020 Budget':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.MTDbudget;
+              } else {
+                seriesDataItem.data.push(data.MTDbudget);
+              }
+              break;
+            case '2020 Actual':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.MTDactual;
+              } else {
+                seriesDataItem.data.push(data.MTDactual);
+              }
+              break;
+            case '2019 Actual':
+              if (seriesDataItem.data && !!seriesDataItem.data[monthIndex]) {
+                seriesDataItem.data[monthIndex] = seriesDataItem.data[monthIndex] + data.py_mtd_actual;
+              } else {
+                seriesDataItem.data.push(data.py_mtd_actual);
+              }
+              break;
+            default: break;
+          }
+          seriesData[index] = seriesDataItem;
         }
-        seriesData[index] = seriesDataItem;
       }
     }
 
@@ -405,12 +412,12 @@ export class HighChartEbitdaComponent implements OnInit {
     this.checkAndAlertUserInfo();
   }
 
-  analyzeData() {
+  analyzeData(isTestData: boolean) {
     this.startMnthIndex = this.MONTHS.indexOf(this.fromMonth);
     this.endMnthIndex = this.MONTHS.indexOf(this.toMonth);
     this.checkAndAlertUserInfo();
     if (this.checkAndAlertUserInfo()) {
-      this.processData();
+      this.processData(isTestData);
     }
   }
 
@@ -422,9 +429,5 @@ export class HighChartEbitdaComponent implements OnInit {
       this.userInfo = '';
       return true;
     }
-  }
-
-  isUserInfoAvailable() {
-    return !this.userInfo;
   }
 }

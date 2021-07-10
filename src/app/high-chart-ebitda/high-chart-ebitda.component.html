@@ -13,7 +13,13 @@
             <option *ngFor="let period of toPeriods" [value]="period">{{period}}</option>
         </select>
 
-        <button (click)="analyzeData()" mat-raised-button class="analyze-button">Analyze</button>
+        <button (click)="analyzeData(false)" mat-raised-button class="analyze-button">Analyze</button>
+
+        <button (click)="analyzeData(true)" mat-raised-button class="analyze-button">Test Data
+            View</button>
+
+        <button (click)="analyzeData(false)" mat-raised-button class="analyze-button">Provided Data
+            View</button>
     </div>
 
     <div *ngIf="userInfo.length > 0" class="container selections-div">
@@ -22,5 +28,9 @@
 
     <div fxLayout="column">
         <div id="container"></div>
+        <h3>For filtering the chart click on labels(<span style="color: #212954;">2020 Actual</span>, <span
+                style="color: #8592d4;">2019 Actual</span>, <span style="color: pink;">2020
+                Budgeted</span>, <span style="color: #8592d4;">YTD 2020</span>, Etc..) under the
+            charts </h3>
     </div>
 </div>

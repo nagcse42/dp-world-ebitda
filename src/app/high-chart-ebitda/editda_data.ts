@@ -1,4 +1,5 @@
-export const editdaData: EBITDA[] = [
+export const editdaData: EBITDA[] =
+  [
     {
       MONTH: "January",
       ENTITY: "1A",
@@ -21825,35 +21826,182 @@ export const editdaData: EBITDA[] = [
       YEAR: 2020
     }
   ]
-  
-  export interface Employee {
-    company: string;
-    frequency: number;
+
+export interface Employee {
+  company: string;
+  frequency: number;
+}
+
+export interface EBITDA {
+  MONTH: string,
+  ENTITY: string,
+  ACCOUNT: string,
+  MTDactual: number,
+  YTDactual: number,
+  MTDbudget: number,
+  YTDbudget: number,
+  CYFullYearBudget: number,
+  CYFullYearForecast: number,
+  py_mtd_actual: number,
+  py_ytd_actual: number,
+  py_full_year_actual: number,
+  YEAR: number
+}
+
+export interface SeriesData {
+  type: string;
+  name: string;
+  data: number[];
+  color: string;
+  yAxis: string;
+}
+
+export const StatsBarChart: Employee[] = [
+  { company: 'Apple', frequency: 100000 },
+  { company: 'IBM', frequency: 80000 },
+  { company: 'HP', frequency: 20000 },
+  { company: 'Facebook', frequency: 70000 },
+  { company: 'TCS', frequency: 12000 },
+  { company: 'Google', frequency: 110000 },
+  { company: 'Wipro', frequency: 5000 },
+  { company: 'EMC', frequency: 4000 }
+];
+
+
+export const testSeriesData: any[] = [
+  {
+    "type": "column",
+    "name": "2020 Actual",
+    "data": [
+      593291537,
+      580638490,
+      643888960,
+      585506828,
+      643085640,
+      593933434,
+      615815233,
+      592747658,
+      630424461,
+      602352014,
+      647451045,
+      687985006
+    ],
+    "color": "#212954"
+  },
+  {
+    "type": "column",
+    "name": "2019 Actual",
+    "data": [
+      602424569,
+      592935106,
+      630155274,
+      606097374,
+      579748939,
+      567233082,
+      575731670,
+      637204165,
+      603558757,
+      619288433,
+      634309265,
+      633277275
+    ],
+    "color": "#8592d4"
+  },
+  {
+    "type": "column",
+    "name": "2020 Budget",
+    "data": [
+      598677952,
+      588249549,
+      567500302,
+      637054241,
+      582263902,
+      577213240,
+      642887878,
+      621454908,
+      665067838,
+      685944414,
+      678393354,
+      637193150
+    ],
+    "color": "pink"
+  },
+  {
+    "type": "spline",
+    "name": "YTD 2020",
+    "yAxis": 1,
+    "xAxis": 1,
+    "data": [
+      616139229,
+      589163678,
+      581081730,
+      634705222,
+      619554399,
+      651126684,
+      612845372,
+      582391682,
+      649094520,
+      610601597,
+      668555001,
+      660830227
+    ],
+    "color": "#212954",
+    "marker": {
+      "lineWidth": 1,
+      "lineColor": "#212954",
+      "fillColor": "#212954"
+    }
+  },
+  {
+    "type": "spline",
+    "name": "YTD 2019",
+    "yAxis": 1,
+    "xAxis": 1,
+    "data": [
+      615218631,
+      591932537,
+      573167202,
+      556661111,
+      650228369,
+      658987067,
+      601735862,
+      599724310,
+      648259125,
+      585609832,
+      585583379,
+      681880855
+    ],
+    "color": "#8592d4",
+    "marker": {
+      "lineWidth": 1,
+      "lineColor": "#8592d4",
+      "fillColor": "#8592d4"
+    }
+  },
+  {
+    "type": "spline",
+    "name": "YTD Budget",
+    "yAxis": 1,
+    "xAxis": 1,
+    "data": [
+      616139229,
+      589163678,
+      581081730,
+      604233511,
+      639554399,
+      669954399,
+      691114399,
+      721514399,
+      759143999,
+      782114399,
+      812514399,
+      852914399
+    ],
+    "color": "pink",
+    "marker": {
+      "lineWidth": 1,
+      "lineColor": "pink",
+      "fillColor": "pink"
+    }
   }
-  
-  export interface EBITDA {
-    MONTH: string,
-    ENTITY: string,
-    ACCOUNT: string,
-    MTDactual: number,
-    YTDactual: number,
-    MTDbudget: number,
-    YTDbudget: number,
-    CYFullYearBudget: number,
-    CYFullYearForecast: number,
-    py_mtd_actual: number,
-    py_ytd_actual: number,
-    py_full_year_actual: number,
-    YEAR: number
-  }
-  
-  export const StatsBarChart: Employee[] = [
-    { company: 'Apple', frequency: 100000 },
-    { company: 'IBM', frequency: 80000 },
-    { company: 'HP', frequency: 20000 },
-    { company: 'Facebook', frequency: 70000 },
-    { company: 'TCS', frequency: 12000 },
-    { company: 'Google', frequency: 110000 },
-    { company: 'Wipro', frequency: 5000 },
-    { company: 'EMC', frequency: 4000 }
-  ];
+]
